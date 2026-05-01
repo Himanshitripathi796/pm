@@ -47,6 +47,10 @@ export async function POST(request: NextRequest) {
       return errorResponse("Validation failed.", 422, error.flatten());
     }
 
-    return errorResponse("Failed to sign up user.", 500);
+    console.error("Signup error:", error);
+    console.error("Error stack:", error instanceof Error ? error.stack : "No stack trace");
+    
+    const message = error instanceof Error ? error.message : String(error);
+    return errorResponse(message, 500);
   }
 }
